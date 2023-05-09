@@ -1,12 +1,12 @@
-pub fn serial_quick_sort(arr: &mut [f64]) {
+pub fn serial_quick_sort(arr: &mut [u64]) {
     if arr.len() == 0 {
         return;
     }
     let length = arr.len();
-    quick_sort_helper(arr, 0, length-1);
+    quick_sort_helper(arr, 0, length - 1);
 }
 
-fn quick_sort_helper(arr: &mut [f64], left: usize, right: usize) {
+fn quick_sort_helper(arr: &mut [u64], left: usize, right: usize) {
     let mut i = left;
     let mut j = right;
     let pivot = arr[(left + right) / 2];
@@ -33,9 +33,6 @@ fn quick_sort_helper(arr: &mut [f64], left: usize, right: usize) {
     }
 }
 
-
-
-
-// pub fn parallel_quick_sort(arr: &mut [f64]) -> &mut [f64]{
+// pub fn parallel_quick_sort(arr: &mut [u64]) -> &mut [u64]{
 //     return arr;
 // }

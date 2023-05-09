@@ -1,4 +1,4 @@
-fn serial_merge(arr: &mut [f64], start: usize, mid: usize, end: usize) {
+fn serial_merge(arr: &mut [u64], start: usize, mid: usize, end: usize) {
     let len1 = mid - start + 1;
     let len2 = end - mid;
     let left = arr[start..mid + 1].to_vec();
@@ -27,7 +27,7 @@ fn serial_merge(arr: &mut [f64], start: usize, mid: usize, end: usize) {
         k += 1;
     }
 }
-fn serial_merge_sort_helper(arr: &mut [f64], left: usize, right: usize) {
+fn serial_merge_sort_helper(arr: &mut [u64], left: usize, right: usize) {
     if left >= right {
         return;
     }
@@ -36,7 +36,7 @@ fn serial_merge_sort_helper(arr: &mut [f64], left: usize, right: usize) {
     serial_merge_sort_helper(arr, mid + 1, right);
     serial_merge(arr, left, mid, right);
 }
-pub fn serial_merge_sort(arr: &mut [f64]) {
+pub fn serial_merge_sort(arr: &mut [u64]) {
     if arr.len() == 0 {
         return;
     }
@@ -44,5 +44,5 @@ pub fn serial_merge_sort(arr: &mut [f64]) {
     serial_merge_sort_helper(arr, 0, len - 1);
 }
 
-fn parallel_merge(arr: &mut [f64], start: usize, mid: usize, end: usize) {}
-pub fn parallel_merge_sort(arr: &mut [f64], left: usize, right: usize) {}
+fn parallel_merge(arr: &mut [u64], start: usize, mid: usize, end: usize) {}
+pub fn parallel_merge_sort(arr: &mut [u64], left: usize, right: usize) {}
