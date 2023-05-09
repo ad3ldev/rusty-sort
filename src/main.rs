@@ -7,6 +7,7 @@ use crate::bubble_sort::serial_bubble_sort;
 use crate::merge_sort::serial_merge_sort;
 use crate::quick_sort::serial_quick_sort;
 use rand::prelude::*;
+use std::time::Instant;
 
 fn gen_rand_arr<const SIZE: usize>(rng: &mut ThreadRng) -> [u64; SIZE] {
     let mut arr = [0; SIZE];
@@ -20,11 +21,11 @@ fn main() {
     let mut rng = thread_rng();
     let mut arr: [u64; 1_000_000] = gen_rand_arr(&mut rng);
 
-    // serial_bubble_sort(&mut arr);
+    let start = Instant::now();
+    serial_bubble_sort(&mut arr);
     // serial_quick_sort(&mut arr);
-    serial_merge_sort(&mut arr);
+    // serial_merge_sort(&mut arr);
+    let end = Instant::now();
 
-    for element in arr.iter() {
-        println!("{}", element)
-    }
+    println!("Time elapsed: {:?}", end.duration_since(start));
 }
