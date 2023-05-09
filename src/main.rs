@@ -1,3 +1,4 @@
+#![allow(unused)]
 mod bubble_sort;
 mod merge_sort;
 mod quick_sort;
@@ -22,9 +23,9 @@ fn main() {
     let mut arr: [u64; 1_000_000] = gen_rand_arr(&mut rng);
 
     let start = Instant::now();
-    // serial_bubble_sort(&mut arr);
+    serial_bubble_sort(&mut arr);
     // serial_quick_sort(&mut arr);
-    serial_merge_sort(&mut arr);
+    // serial_merge_sort(&mut arr);
     let end = Instant::now();
 
     println!("Time elapsed: {:?}", end.duration_since(start));
