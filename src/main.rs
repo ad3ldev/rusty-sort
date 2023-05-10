@@ -19,7 +19,7 @@ fn gen_rand_arr<const SIZE: usize>(rng: &mut ThreadRng) -> [u64; SIZE] {
 
 fn main() {
     let mut rng = thread_rng();
-    let mut arr: [u64; 1_000_000] = gen_rand_arr(&mut rng);
+    let mut arr: [u64; 1_000] = gen_rand_arr(&mut rng);
 
     let start = Instant::now();
     // serial_bubble_sort(&mut arr);
