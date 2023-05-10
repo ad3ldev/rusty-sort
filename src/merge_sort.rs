@@ -1,3 +1,5 @@
+use std::thread;
+
 fn serial_merge(arr: &mut [u64], start: usize, mid: usize, end: usize) {
     let len1 = mid - start + 1;
     let len2 = end - mid;
@@ -44,5 +46,41 @@ pub fn serial_merge_sort(arr: &mut [u64]) {
     serial_merge_sort_helper(arr, 0, len - 1);
 }
 
-fn parallel_merge(arr: &mut [u64], start: usize, mid: usize, end: usize) {}
-pub fn parallel_merge_sort(arr: &mut [u64], left: usize, right: usize) {}
+pub fn parallel_merge_sort(arr: &mut [u64], threads_num: usize) {
+    let len = arr.len();
+    if len == 0 {
+        return;
+    }
+    if len <= threads_num {
+        serial_merge_sort(arr)
+    }
+    let chunk_size = (len as f64 / threads_num as f64).ceil() as usize;
+    let mut start = 0;
+    let mut end = chunk_size;
+    let mut children = vec![];
+    for i in 0..threads_num {
+        let mut chunk = arr[start..end].to_vec();
+        children.push(thread::spawn(move || {
+            serial_merge_sort(&mut chunk);
+            chunk
+        }));
+        start += chunk_size;
+        end += chunk_size;
+        if end > len {
+            end = len;
+        }
+    }
+    start = 0;
+    end = chunk_size;
+    for child in children {
+        let chunk = child.join().unwrap();
+        arr[start..end].copy_from_slice(&chunk[..]);
+        start += chunk_size;
+        end += chunk_size;
+        if end > len {
+            end = len;
+        }
+    }
+    let mut mid = len / 2;
+    serial_merge(arr, 0, mid, len - 1)
+}
