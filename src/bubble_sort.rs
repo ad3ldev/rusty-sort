@@ -1,3 +1,5 @@
+use rayon::prelude::*;
+
 pub fn serial_bubble_sort(arr: &mut [u64]) {
     let n: usize = arr.len();
     for i in 0..n - 1 {
