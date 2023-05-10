@@ -6,3 +6,4 @@
 - Bubble Sort
 - Quick Sort
 - Merge Sort
+- Radix Sort
