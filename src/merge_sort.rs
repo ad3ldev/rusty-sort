@@ -58,13 +58,13 @@ fn parallel_merge_sort_helper(
     let mut start = 0;
     let mut end = *chunk_size;
     let mut children = vec![];
-    for i in 0..threads_num {
-        if (start > end) {
+    for _ in 0..threads_num {
+        if start > end {
             break;
         }
         let mut chunk = arr[start..end].to_vec();
         children.push(thread::spawn(move || {
-            serial_merge_sort(&mut chunk);
+            chunk.sort();
             chunk
         }));
         start += *chunk_size;
@@ -87,6 +87,7 @@ fn parallel_merge_sort_helper(
     *chunk_size *= 2;
     parallel_merge_sort_helper(arr, chunk_size, len, threads_num);
 }
+
 pub fn parallel_merge_sort(arr: &mut [u64], threads_num: usize) {
     let len = arr.len();
     if len == 0 {

@@ -12,37 +12,47 @@ use std::thread::*;
 use std::time::Duration;
 use std::time::Instant;
 
+fn check_if_equal(control: &mut [u64], tested: &mut [u64]) -> bool {
+    let len = control.len();
+    let len_test = tested.len();
+    if len != len_test {
+        return false;
+    }
+    for i in 0..len {
+        if control[i] != tested[i] {
+            return false;
+        }
+    }
+    return true;
+}
+
 fn main() {
-    let logical_processors: usize = available_parallelism().unwrap().get();
-    const CAPACITY: usize = 100_000_000;
+    let processors: usize = available_parallelism().unwrap().get();
+    const CAPACITY: usize = 1_000_000;
     let mut arr: Vec<u64> = vec![0; CAPACITY];
     rand::thread_rng().fill(&mut arr[..]);
-    // let mut arr = [76, 921, 32, 0, 237];
-    let mut least: Duration = Duration::MAX;
-    let mut least_threads = CAPACITY;
-    for i in 2..logical_processors + 1 {
-        let mut temp = arr.clone();
-        let start = Instant::now();
-        parallel_merge_sort(&mut temp, i);
-        let end = Instant::now();
-        if (end.duration_since(start) < least) {
-            least = end.duration_since(start);
-            least_threads = i;
-        }
-        println!(
-            "Time elapsed: {:?},\tthreads: {}",
-            end.duration_since(start),
-            i
-        );
-    }
-    println!("Parallel: {:?}, {}", least, least_threads);
-    let mut trial = arr.clone();
+
+    // Control
+    let mut control = arr.clone();
     let mut start = Instant::now();
-    serial_merge_sort(&mut arr);
+    control.sort();
     let mut end = Instant::now();
-    println!("Serial: {:?}, 1", end.duration_since(start));
+    println!("std::sort:\t{:?}, 1", end.duration_since(start));
+
+    // Parallel
+    let mut parallel = arr.clone();
     start = Instant::now();
-    trial.sort();
+    parallel_merge_sort(&mut parallel, processors);
     end = Instant::now();
-    println!("std: {:?}, 1", end.duration_since(start));
+    println!("Parallel:\t{:?}, {}", end.duration_since(start), processors);
+
+    // Serial
+    start = Instant::now();
+    serial_merge_sort(&mut arr);
+    end = Instant::now();
+    println!("Serialized:\t{:?}, 1", end.duration_since(start));
+
+    if !(check_if_equal(&mut control, &mut parallel)) || !check_if_equal(&mut control, &mut arr) {
+        panic!("not equal")
+    }
 }
