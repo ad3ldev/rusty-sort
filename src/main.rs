@@ -48,7 +48,8 @@ fn main() {
 
     // Serial
     start = Instant::now();
-    serial_bubble_sort(&mut arr);
+    // serial_bubble_sort(&mut arr);
+    // serial_merge_sort(&mut arr);
     end = Instant::now();
     println!("Serialized:\t{:?}, 1", end.duration_since(start));
 
