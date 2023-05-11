@@ -85,7 +85,7 @@ fn parallel_merge_sort_helper(
         }
     }
     *chunk_size *= 2;
-    parallel_merge_sort_helper(arr, chunk_size, len, threads_num / 2);
+    parallel_merge_sort_helper(arr, chunk_size, len, threads_num);
 }
 pub fn parallel_merge_sort(arr: &mut [u64], threads_num: usize) {
     let len = arr.len();

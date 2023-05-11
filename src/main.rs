@@ -9,28 +9,40 @@ use crate::merge_sort::*;
 use crate::quick_sort::*;
 use rand::prelude::*;
 use std::thread::*;
+use std::time::Duration;
 use std::time::Instant;
 
 fn main() {
     let logical_processors: usize = available_parallelism().unwrap().get();
-    const CAPACITY: usize = 1_000_000;
-    // let mut arr: [u64; CAPACITY] = [0; CAPACITY];
-    // rand::thread_rng().fill(&mut arr[..]);
-
-    let mut arr = [76, 921, 32, 0, 237, 24, 132, 40, 1248, 21394, 4, 14];
-
-    let start = Instant::now();
-    // serial_bubble_sort(&mut arr);
-    // parallel_bubble_sort(&mut arr);
-    // serial_quick_sort(&mut arr);
-    // serial_merge_sort(&mut arr);
-    // serial_radix_sort(&mut arr);
-    // serial_merge_sort(&mut arr);
-    parallel_merge_sort(&mut arr, 8);
-    let end = Instant::now();
-
-    for i in arr.iter() {
-        println!("{}", i);
+    const CAPACITY: usize = 100_000_000;
+    let mut arr: Vec<u64> = vec![0; CAPACITY];
+    rand::thread_rng().fill(&mut arr[..]);
+    // let mut arr = [76, 921, 32, 0, 237];
+    let mut least: Duration = Duration::MAX;
+    let mut least_threads = CAPACITY;
+    for i in 2..logical_processors + 1 {
+        let mut temp = arr.clone();
+        let start = Instant::now();
+        parallel_merge_sort(&mut temp, i);
+        let end = Instant::now();
+        if (end.duration_since(start) < least) {
+            least = end.duration_since(start);
+            least_threads = i;
+        }
+        println!(
+            "Time elapsed: {:?},\tthreads: {}",
+            end.duration_since(start),
+            i
+        );
     }
-    println!("Time elapsed: {:?}", end.duration_since(start));
+    println!("Parallel: {:?}, {}", least, least_threads);
+    let mut trial = arr.clone();
+    let mut start = Instant::now();
+    serial_merge_sort(&mut arr);
+    let mut end = Instant::now();
+    println!("Serial: {:?}, 1", end.duration_since(start));
+    start = Instant::now();
+    trial.sort();
+    end = Instant::now();
+    println!("std: {:?}, 1", end.duration_since(start));
 }
