@@ -27,7 +27,7 @@ fn check_if_equal(control: &mut [u64], tested: &mut [u64]) -> bool {
 
 fn main() {
     let processors: usize = available_parallelism().unwrap().get();
-    const CAPACITY: usize = 1_000;
+    const CAPACITY: usize = 10_000_000;
     let mut arr: Vec<u64> = vec![0; CAPACITY];
     rand::thread_rng().fill(&mut arr[..]);
 
@@ -41,15 +41,14 @@ fn main() {
     // Parallel
     let mut parallel = arr.clone();
     start = Instant::now();
-    // parallel_merge_sort(&mut parallel, processors);
-    parallel_bubble_sort(&mut parallel);
+    parallel_merge_sort(&mut parallel, processors);
+    // parallel_bubble_sort(&mut parallel);
     end = Instant::now();
     println!("Parallel:\t{:?}, {}", end.duration_since(start), processors);
 
     // Serial
     start = Instant::now();
-    // serial_bubble_sort(&mut arr);
-    // serial_merge_sort(&mut arr);
+    serial_quick_sort(&mut arr);
     end = Instant::now();
     println!("Serialized:\t{:?}, 1", end.duration_since(start));
 
