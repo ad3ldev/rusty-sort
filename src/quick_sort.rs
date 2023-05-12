@@ -1,12 +1,4 @@
-pub fn serial_quick_sort(arr: &mut [u64]) {
-    if arr.len() == 0 {
-        return;
-    }
-    let length = arr.len();
-    quick_sort_helper(arr, 0, (length - 1) as isize);
-}
-
-// fn quick_sort_helper_old(arr: &mut [u64], left: usize, right: usize) {
+// fn serial_quick_sort_helper_old(arr: &mut [u64], left: usize, right: usize) {
 //     let mut i = left;
 //     let mut j = right;
 //     let pivot = arr[(left + right) / 2];
@@ -26,10 +18,10 @@ pub fn serial_quick_sort(arr: &mut [u64]) {
 //         }
 //     }
 //     if left < j {
-//         quick_sort_helper(arr, left, j);
+//         serial_quick_sort_helper(arr, left, j);
 //     }
 //     if i < right {
-//         quick_sort_helper(arr, i, right);
+//         serial_quick_sort_helper(arr, i, right);
 //     }
 // }
 
@@ -46,13 +38,17 @@ fn partition(arr: &mut [u64], low: isize, high: isize) -> isize {
     arr.swap(i as usize, high as usize);
     return i;
 }
-fn quick_sort_helper(arr: &mut [u64], low: isize, high: isize) {
+fn serial_quick_sort_helper(arr: &mut [u64], low: isize, high: isize) {
     if (low < high) {
         let p = partition(arr, low, high);
-        quick_sort_helper(arr, low, p - 1);
-        quick_sort_helper(arr, p + 1, high);
+        serial_quick_sort_helper(arr, low, p - 1);
+        serial_quick_sort_helper(arr, p + 1, high);
     }
 }
-// pub fn parallel_quick_sort(arr: &mut [u64]) -> &mut [u64]{
-//     return arr;
-// }
+pub fn serial_quick_sort(arr: &mut [u64]) {
+    if arr.len() == 0 {
+        return;
+    }
+    let length = arr.len();
+    serial_quick_sort_helper(arr, 0, (length - 1) as isize);
+}
