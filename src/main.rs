@@ -60,7 +60,7 @@ fn main() {
     let mut serial = original.clone();
     let mut control = original.clone();
 
-    serial_running(&mut control, &mut serial, serial_merge_sort);
+    serial_running(&mut control, &mut serial, serial_bubble_sort);
     if !check_if_equal(&mut control, &mut serial) {
         panic!("NOT EQUAL SERIAL");
     }
@@ -68,10 +68,10 @@ fn main() {
     for thread in threads {
         let mut parallel = original.clone();
         println!("Sizes: {}\tThreads: {}\n", size, thread);
-        parallel_running(&mut parallel, thread, parallel_merge_sort);
+        parallel_running(&mut parallel, thread, parallel_bubble_sort);
         println!("-----------------------------------------------");
         if !check_if_equal(&mut control, &mut parallel) {
-            panic!("NOT EQUAL SERIAL");
+            panic!("NOT EQUAL PARALLEL");
         }
     }
 }

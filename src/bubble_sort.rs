@@ -40,6 +40,6 @@ pub fn parallel_bubble_sort(arr: &mut [u64], threads_num: usize) {
                 swapped.store(true, Ordering::Relaxed);
             }
         });
-        // parallel_merge(arr, &mut chunk_size, n, threads_num);
+        parallel_merge(arr, &mut chunk_size, n, threads_num);
     }
 }
