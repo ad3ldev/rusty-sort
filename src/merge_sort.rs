@@ -77,7 +77,10 @@ fn parallel_merge_helper(left: &mut [u64], right: &mut [u64]) -> Vec<u64> {
     }
     merged
 }
-fn parallel_merge(arr: &mut [u64], chunk_size: &mut usize, len: usize, threads_num: usize) {
+pub fn parallel_merge(arr: &mut [u64], chunk_size: &mut usize, len: usize, threads_num: usize) {
+    if *chunk_size > len {
+        return;
+    }
     let mut start = 0;
     let mut end = *chunk_size;
     let mut children = vec![];
@@ -85,36 +88,33 @@ fn parallel_merge(arr: &mut [u64], chunk_size: &mut usize, len: usize, threads_n
         let mut left = arr[start..end].to_vec();
         start += *chunk_size;
         end += *chunk_size;
-        if { end > len } {
+        if end > len {
             end = len;
         }
-        if { start > end } {
+        if start > end {
             break;
         }
-        let mut right = arr[end..end + *chunk_size].to_vec();
+        let mut right = arr[start..end].to_vec();
         children.push(thread::spawn(move || {
-            let mut merged = parallel_merge_helper(&mut left, &mut right);
+            let merged = parallel_merge_helper(&mut left, &mut right);
             merged
         }));
-        start += *chunk_size;
-        end += *chunk_size;
-        if { end > len } {
-            end = len;
-        }
-        if { start > end } {
-            break;
-        }
-    }
-    start = 0;
-    end = *chunk_size + *chunk_size;
-    for child in children {
-        let chunk = child.join().unwrap();
-        arr[start..end].copy_from_slice(&chunk[..]);
         start += *chunk_size;
         end += *chunk_size;
         if end > len {
             end = len;
         }
+        if start > end {
+            break;
+        }
+    }
+    start = 0;
+    end = 0;
+    for child in children {
+        let chunk = child.join().unwrap();
+        end += chunk.len();
+        arr[start..end].copy_from_slice(&chunk[..]);
+        start = end;
     }
     *chunk_size *= 2;
     parallel_merge(arr, chunk_size, len, threads_num)
@@ -125,11 +125,8 @@ fn parallel_merge_sort_helper(
     len: usize,
     threads_num: usize,
 ) {
-    if *chunk_size >= len {
-        return;
-    }
     let mut start = 0;
-    let mut end = *chunk_size;
+    let mut end = if *chunk_size > len { len } else { *chunk_size };
     let mut children = vec![];
     for _ in 0..threads_num {
         if start > end {
@@ -157,8 +154,7 @@ fn parallel_merge_sort_helper(
             end = len;
         }
     }
-    *chunk_size *= 2;
-    parallel_merge_sort_helper(arr, chunk_size, len, threads_num);
+    parallel_merge(arr, chunk_size, len, threads_num);
 }
 pub fn parallel_merge_sort(arr: &mut [u64], threads_num: usize) {
     let len = arr.len();
@@ -170,5 +166,4 @@ pub fn parallel_merge_sort(arr: &mut [u64], threads_num: usize) {
     }
     let mut chunk_size = (len as f64 / threads_num as f64).ceil() as usize;
     parallel_merge_sort_helper(arr, &mut chunk_size, len, threads_num);
-    serial_merge(arr, 0, chunk_size / 2 - 1, len - 1);
 }

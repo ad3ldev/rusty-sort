@@ -1,14 +1,12 @@
-#![allow(unused)]
 mod bubble_sort;
 mod merge_sort;
 mod quick_sort;
 
 use crate::bubble_sort::*;
 use crate::merge_sort::*;
-use crate::quick_sort::*;
+// use crate::quick_sort::*;
 use rand::prelude::*;
 use std::thread::*;
-use std::time::Duration;
 use std::time::Instant;
 
 fn check_if_equal(control: &mut [u64], tested: &mut [u64]) -> bool {
@@ -27,7 +25,7 @@ fn check_if_equal(control: &mut [u64], tested: &mut [u64]) -> bool {
 
 fn main() {
     let processors: usize = available_parallelism().unwrap().get();
-    const CAPACITY: usize = 25;
+    const CAPACITY: usize = 10_000_000;
     let mut arr: Vec<u64> = vec![0; CAPACITY];
     rand::thread_rng().fill(&mut arr[..]);
 
@@ -41,23 +39,22 @@ fn main() {
     // Parallel
     let mut parallel = arr.clone();
     start = Instant::now();
-    // parallel_merge_sort(&mut parallel, processors);
-    parallel_bubble_sort(&mut parallel);
+    parallel_merge_sort(&mut parallel, processors);
+    // parallel_bubble_sort(&mut parallel, processors);
     end = Instant::now();
     println!("Parallel:\t{:?}, {}", end.duration_since(start), processors);
 
     // Serial
     start = Instant::now();
-    serial_bubble_sort(&mut arr);
+    // serial_bubble_sort(&mut arr);
+    serial_merge_sort(&mut arr);
     end = Instant::now();
     println!("Serialized:\t{:?}, 1", end.duration_since(start));
 
     if !check_if_equal(&mut control, &mut arr) {
-        panic!("not equal Serial");
+        panic!("NOT EQUAL SERIAL");
     }
     if !(check_if_equal(&mut control, &mut parallel)) {
-        for i in 0..CAPACITY {
-            println!("{}: {} {}", i, control[i], parallel[i]);
-        }
+        panic!("NOT EQUAL PARALLEL");
     }
 }
