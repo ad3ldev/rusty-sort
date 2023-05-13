@@ -4,6 +4,10 @@
 # Sorting Visualizer
 
 ## Sorting Algorithms
-
 -   Bubble Sort
 -   Merge Sort
+
+### Bubble Sort
+#### Serial
+
+#### Parallel
