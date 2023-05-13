@@ -6,5 +6,4 @@
 ## Sorting Algorithms
 
 -   Bubble Sort
--   Quick Sort
 -   Merge Sort
