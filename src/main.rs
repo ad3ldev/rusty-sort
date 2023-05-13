@@ -50,8 +50,9 @@ fn main() {
     let threads = vec![2, 4, 8, 16, 32];
     let mut size: usize;
     let mut buffer = String::new();
-    std::io::stdin().read_line(&mut buffer);
+
     println!("Input size of array: ");
+    std::io::stdin().read_line(&mut buffer);
     size = buffer.trim().parse().unwrap();
 
     let mut original: Vec<u64> = vec![0; size];
@@ -68,7 +69,7 @@ fn main() {
         let mut parallel = original.clone();
         println!("Sizes: {}\tThreads: {}\n", size, thread);
         parallel_running(&mut parallel, thread, parallel_merge_sort);
-        println!("------------------------------------\n");
+        println!("-----------------------------------------------");
         if !check_if_equal(&mut control, &mut parallel) {
             panic!("NOT EQUAL SERIAL");
         }
