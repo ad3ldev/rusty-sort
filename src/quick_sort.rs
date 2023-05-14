@@ -26,24 +26,24 @@ pub fn serial_quick_sort(arr: &mut [u64]) {
     serial_quick_sort_helper(arr, 0, (length - 1) as isize);
 }
 
-fn hyper_quick_sort(arr: &mut [u64], low: isize, high: isize, threads_num: usize) {
-    if (low < high) {
-        let p = partition(arr, low, high);
-        if threads_num > 1 {
-            rayon::join(
-                || hyper_quick_sort(arr, low, p - 1, threads_num / 2),
-                || hyper_quick_sort(arr, p + 1, high, threads_num - threads_num / 2),
-            );
-        } else {
-            hyper_quick_sort(arr, low, p - 1, threads_num);
-            hyper_quick_sort(arr, p + 1, high, threads_num);
-        }
-    }
-}
+// fn hyper_quick_sort(arr: &mut [u64], low: isize, high: isize, threads_num: usize) {
+//     if (low < high) {
+//         let p = partition(arr, low, high);
+//         if threads_num > 1 {
+//             rayon::join(
+//                 || hyper_quick_sort(arr, low, p - 1, threads_num / 2),
+//                 || hyper_quick_sort(arr, p + 1, high, threads_num - threads_num / 2),
+//             );
+//         } else {
+//             hyper_quick_sort(arr, low, p - 1, threads_num);
+//             hyper_quick_sort(arr, p + 1, high, threads_num);
+//         }
+//     }
+// }
 pub fn parallel_quick_sort(arr: &mut [u64], threads_num: usize) {
     if arr.len() == 0 {
         return;
     }
     let length = arr.len();
-    hyper_quick_sort(arr, 0, (length - 1) as isize, threads_num);
+    // hyper_quick_sort(arr, 0, (length - 1) as isize, threads_num);
 }
