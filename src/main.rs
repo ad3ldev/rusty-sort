@@ -3,7 +3,7 @@ mod merge_sort;
 mod quick_sort;
 
 use crate::bubble_sort::*;
-use crate::merge_sort::*;
+// use crate::merge_sort::*;
 // use crate::quick_sort::*;
 use rand::prelude::*;
 use std::time::Instant;
@@ -47,11 +47,11 @@ fn serial_running(control: &mut [u64], arr: &mut [u64], serial_sort: fn(&mut [u6
 fn main() {
     // let processors: usize = availa  ble_parallelism().unwrap().get();
     let threads = vec![2, 4, 8, 16, 32];
-    let mut size: usize;
+    let size: usize;
     let mut buffer = String::new();
 
     println!("Input size of array: ");
-    std::io::stdin().read_line(&mut buffer);
+    std::io::stdin().read_line(&mut buffer).expect("Failed");
     size = buffer.trim().parse().unwrap();
 
     let mut original: Vec<u64> = vec![0; size];
