@@ -17,3 +17,12 @@ With Rust native support for concurrency and parallelism, and performance, it wa
 
 ### Merge Sort
 ![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/1a5cc60a-c3d8-4bec-8a59-14a78dee5629)
+
+## Conculsion
+With the divide and conquer strategy that was used on the previous algorithms.
+We can devise a standard algorithm to make any sorting algorithm parallel:
+1. Divide the array into Chunks, each chunk being = array size / processors.
+2. Use the algorithm to sort each chunk in parallel.
+3. Take each two chunks and merge them in parallel.
+4. Continue until one chunk is left
+5. Return the array sorted.
