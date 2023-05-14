@@ -8,13 +8,9 @@
 -   Merge Sort
 
 ### Bubble Sort
-#### Serial
-
-#### Parallel
+![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/142e72a8-3325-45db-887d-33c926fdaf83)
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 ### Merge Sort
-#### Serial
-
-#### Parallel
+![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/1a5cc60a-c3d8-4bec-8a59-14a78dee5629)
