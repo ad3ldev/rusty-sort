@@ -1,7 +1,13 @@
 ![Language](https://img.shields.io/badge/language-Rust%20-brown.svg)
 ![License](https://img.shields.io/badge/License-MIT%20-red.svg)
 
-# Rusty Sort
+
+        ▄▄▄  ▄• ▄▌.▄▄ · ▄▄▄▄▄ ▄· ▄▌    .▄▄ ·       ▄▄▄  ▄▄▄▄▄
+        ▀▄ █·█▪██▌▐█ ▀. •██  ▐█▪██▌    ▐█ ▀. ▪     ▀▄ █·•██  
+        ▐▀▀▄ █▌▐█▌▄▀▀▀█▄ ▐█.▪▐█▌▐█▪    ▄▀▀▀█▄ ▄█▀▄ ▐▀▀▄  ▐█.▪
+        ▐█•█▌▐█▄█▌▐█▄▪▐█ ▐█▌· ▐█▀·.    ▐█▄▪▐█▐█▌.▐▌▐█•█▌ ▐█▌·
+        .▀  ▀ ▀▀▀  ▀▀▀▀  ▀▀▀   ▀ •      ▀▀▀▀  ▀█▄▀▪.▀  ▀ ▀▀▀ 
+
 ## Problem Statement
 Rust is a multi-paradigm, high-level, general-purpose programming language that emphasizes performance, type safety, and concurrency. It enforces memory safety—ensuring that all references point to valid memory—without requiring the use of a garbage collector or reference counting present in other memory-safe languages. To simultaneously enforce memory safety and prevent concurrent data races, its "borrow checker" tracks the object lifetime of all references in a program during compilation. Rust is popularized for systems programming but also has high-level features including some functional programming constructs.
 With Rust native support for concurrency and parallelism, and performance, it was decided to implement a few algorithms to show and analyze the performance of Rust in a serial and a parallel implementation.
