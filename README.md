@@ -21,12 +21,12 @@ With Rust native support for concurrency and parallelism, and performance, it wa
 -   Merge Sort
 
 ### Bubble Sort
-![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/142e72a8-3325-45db-887d-33c926fdaf83)
+![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/be3037d8-aa0f-42f7-a346-139b6c2c75fb)
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
 ### Merge Sort
-![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/1a5cc60a-c3d8-4bec-8a59-14a78dee5629)
+![image](https://github.com/ad3ldev/rusty-sort/assets/58489322/85fc2026-f0ba-4f33-8f90-f7cb0122f26c)
 
 ## Conculsion
 With the divide and conquer strategy that was used on the previous algorithms.
