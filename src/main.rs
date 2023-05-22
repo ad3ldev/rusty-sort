@@ -1,10 +1,8 @@
 mod bubble_sort;
 mod merge_sort;
-mod quick_sort;
 
 use crate::bubble_sort::*;
 // use crate::merge_sort::*;
-// use crate::quick_sort::*;
 use rand::prelude::*;
 use std::time::Instant;
 
